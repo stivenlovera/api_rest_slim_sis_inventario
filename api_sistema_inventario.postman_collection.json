@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "56eda9fe-5dca-40a0-b826-1123bd3bbe47",
+		"name": "api_sistema_inventario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cliente",
+			"item": [
+				{
+					"name": "Get Clientes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "123456"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/sistema_inventario/cliente.php/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"sistema_inventario",
+								"cliente.php",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Un Cliente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "123456"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/sistema_inventario/cliente.php/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"sistema_inventario",
+								"cliente.php",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post Clientes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "123456"
+							},
+							{
+								"key": "ApiKey",
+								"value": "1234567",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ci\": \"988855\",\r\n    \"nombre\": \"ever\",\r\n    \"apellido\": \"garcia\",\r\n    \"celular\": \"78899525\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/sistema_inventario/cliente.php/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"sistema_inventario",
+								"cliente.php",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\": \"202020\",\n    \"nombre\": \"everth\",\n    \"apellido\": \"garcia\",\n    \"celular\": \"78899525\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost/sistema_inventario/cliente.php/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"sistema_inventario",
+								"cliente.php",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/sistema_inventario/cliente.php/clientes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"sistema_inventario",
+								"cliente.php",
+								"clientes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
