@@ -27,43 +27,43 @@ if($method == "OPTIONS") {
     }
 }*/
 
-// LISTAR TODOS LOS categoria
-$app->get('/categorias', function() use($app){
-    $sql = 'SELECT * FROM categoria ORDER BY id_categoria DESC;';
+// LISTAR TODOS LOS CLIENTE
+$app->get('/stocks', function() use($app){
+    $sql = 'SELECT * FROM stock ORDER BY id_producto DESC;';
     $query = connect($sql);
 
-    $categorias = array();
-    while ($categoria = $query->fetch_assoc()) {
-        $categorias[] = $categoria;
+    $clientes = array();
+    while ($cliente = $query->fetch_assoc()) {
+        $clientes[] = $cliente;
     }
 
     $result = array(
         'status' => 'success',
         'code'	 => 200,
-        'data' => $categorias
+        'data' => $clientes
     );
 
     echo json_encode($result);
 });
 
 // DEVOLVER UN SOLO CLIENTE
-$app->get('/categorias/:id', function($id) use( $app){
-    $sql = 'SELECT * FROM categoria WHERE id_categoria = '.$id;
+$app->get('/stocks/:id', function($id) use( $app){
+    $sql = 'SELECT * FROM stock WHERE id_producto = '.$id;
     $query = connect($sql);
 
     $result = array(
         'status' 	=> 'error',
         'code'		=> 404,
-        'message' 	=> 'Categoria no disponible'
+        'message' 	=> 'stock no disponible'
     );
 
     if($query->num_rows == 1){
-        $categoria = $query->fetch_assoc();
+        $cliente = $query->fetch_assoc();
 
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'data' 	=> $categoria
+            'data' 	=> $cliente
         );
     }
 
@@ -71,11 +71,11 @@ $app->get('/categorias/:id', function($id) use( $app){
 });
 
 // GUARDAR CLIENTE
-$app->post('/categorias', function() use($app){
+$app->post('/stocks', function() use($app){
     $result = array(
         'status' => 'error',
         'code'	 => 404,
-        'message' => 'categoria NO se ha creado'
+        'message' => 'stock NO se ha creado'
     );
 
     //$token = $app->request->headers('ApiKey');
@@ -88,13 +88,17 @@ $app->post('/categorias', function() use($app){
         if(!isset($data['descripcion'])){
             $data['descripcion']=null;
         }
+        if(!isset($data['cantidad'])){
+            $data['cantidad']=null;
+        }
 
         if(!isset($data['estado'])){
             $data['estado']=null;
         }
 
-        $query = "INSERT INTO categoria(descripcion,estado) VALUES(".
+        $query = "INSERT INTO stock(descripcion,cantidad,estado) VALUES(".
             "'{$data['descripcion']}',".
+            "'{$data['cantidad']}',".
             "'1'".
             ");";
             //echo $query;
@@ -104,7 +108,7 @@ $app->post('/categorias', function() use($app){
             $result = array(
                 'status' => 'success',
                 'code'	 => 200,
-                'message' => 'categoria creada correctamente'
+                'message' => 'stock creado correctamente'
             );
         }
     //}
@@ -114,12 +118,13 @@ $app->post('/categorias', function() use($app){
 });
 
 // ACTUALIZAR UN PRODUCTO
-$app->put('/categorias/:id', function($id) use($app){
+$app->put('/stocks/:id', function($id) use($app){
     $json = $app->request->getBody('json');
     $data = json_decode($json, true);
 
-    $sql = "UPDATE categoria SET ".
+    $sql = "UPDATE stock SET ".
         "descripcion = '{$data["descripcion"]}', ".
+        "cantidad = '{$data["cantidad"]}', ".
         "estado = '{$data["estado"]}' ";
 
     /*if(isset($data['imagen'])){

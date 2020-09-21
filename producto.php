@@ -28,9 +28,9 @@ if($method == "OPTIONS") {
 }*/
 
 // LISTAR TODOS LOS PRODUCTOS
-$app->get('/productos', function() use($db, $app){
+$app->get('/productos', function() use($app){
     $sql = 'SELECT * FROM producto ORDER BY id_producto DESC;';
-    $query = $db->query($sql);
+    $query = connect($sql);
 
     $productos = array();
     while ($producto = $query->fetch_assoc()) {
@@ -47,9 +47,9 @@ $app->get('/productos', function() use($db, $app){
 });
 
 // DEVOLVER UN SOLO PRODUCTO
-$app->get('/productos/:id', function($id) use($db, $app){
+$app->get('/productos/:id', function($id) use($app){
     $sql = 'SELECT * FROM producto WHERE id_producto = '.$id;
-    $query = $db->query($sql);
+    $query = connect($sql);
 
     $result = array(
         'status' 	=> 'error',
@@ -71,16 +71,16 @@ $app->get('/productos/:id', function($id) use($db, $app){
 });
 
 // GUARDAR PRODUCTOS
-$app->post('/productos', function() use($app, $db){
+$app->post('/productos', function() use($app){
     $result = array(
         'status' => 'error',
         'code'	 => 404,
         'message' => 'Producto NO se ha creado'
     );
 
-    $token = $app->request->headers('ApiKey');
+    //$token = $app->request->headers('ApiKey');
 
-    if($token=='1234567'){
+    //if($token=='1234567'){
 
         $json = $app->request->getBody('json');
         $data = json_decode($json, true);
@@ -96,11 +96,16 @@ $app->post('/productos', function() use($app, $db){
         if(!isset($data['estado'])){
             $data['estado']=null;
         }
+        
+        if(!isset($data['id_categoria'])){
+            $data['id_categoria']=null;
+        }
 
-        $query = "INSERT INTO producto VALUES(NULL,".
+        $query = "INSERT INTO productos VALUES(NULL,".
             "'{$data['nombre']}',".
-            "'{$data['description']}',".
-            "'{$data['estado']}'".
+            "'{$data['descripcion']}',".
+            "'{$data['estado']}',".
+            "'{$data['id_categoria']}'".
             ");";
 
         $insert = $db->query($query);
@@ -112,25 +117,26 @@ $app->post('/productos', function() use($app, $db){
                 'message' => 'Producto creado correctamente'
             );
         }
-    }
+    //}
 
     echo json_encode($result);
 
 });
 
 // ACTUALIZAR UN PRODUCTO
-$app->put('/productos/:id', function($id) use($db, $app){
+$app->put('/productos/:id', function($id) use($app){
     $json = $app->request->getBody('json');
     $data = json_decode($json, true);
 
-    $sql = "UPDATE producto SET ".
+    $sql = "UPDATE productos SET ".
         "nombre = '{$data["nombre"]}', ".
-        "descripcion = '{$data["descripcion"]}', ";
+        "descripcion = '{$data["descripcion"]}', ".
+        "estado = '{$data["estado"]}', ";
 
-    $sql .=	"estado = '{$data["estado"]}' WHERE id_producto = {$id}";
+    $sql .=	"id_categoria = '{$data["id_categoria"]}' WHERE id_producto = {$id}";
 
 
-    $query = $db->query($sql);
+    $query = connect($sql);
 
     if($query){
         $result = array(
@@ -151,9 +157,9 @@ $app->put('/productos/:id', function($id) use($db, $app){
 });
 
 // ELIMINAR UN PRODUCTO
-$app->delete('/productos/:id', function($id) use($db, $app){
+$app->delete('/productos/:id', function($id) use($app){
     $sql = 'DELETE FROM producto WHERE id_producto = '.$id;
-    $query = $db->query($sql);
+    $query = connect($sql);
 
     if($query){
         $result = array(
