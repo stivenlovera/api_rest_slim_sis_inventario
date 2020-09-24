@@ -1,0 +1,8 @@
+{
+  "name": "sistema-inventario",
+  "version": "0.1.0",
+  "description": "sistema de inventario para un minisupermercado",
+  "template": {
+    "withCompare": false
+  }
+}

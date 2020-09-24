@@ -77,8 +77,6 @@ CREATE TABLE cliente(
 CREATE TABLE venta(
     id_venta int AUTO_INCREMENT primary key,
     fecha DATETIME NOT NULL,
-    precio_unitario double NOT NULL,
-    precio_total double NOT NULL,
     estado CHAR(1),
     id_cliente int NOT NULL,
     id_acceso_user int NOT NULL,
@@ -86,9 +84,13 @@ CREATE TABLE venta(
     FOREIGN KEY (id_acceso_user) REFERENCES acceso_user(id_acceso_user)
 );
 CREATE TABLE producto_venta(
+    id_producto_venta int AUTO_INCREMENT,
     cantidad int NOT NULL,
     id_venta int NOT NULL,
+    precio_unitario double NOT NULL,
+    precio_total double NOT NULL,
     id_producto int NOT NULL,
+    primary key (id_producto_venta,id_venta),
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
     FOREIGN KEY (id_venta) REFERENCES venta(id_venta)
 );

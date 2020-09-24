@@ -117,37 +117,23 @@ estado</panel_attributes>
 --
 id_venta
 fecha
-precio_unitario 
-precio_total
 estado</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>672</x>
-      <y>420</y>
+      <x>721</x>
+      <y>434</y>
       <w>126</w>
-      <h>49</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>producto_venta
 --
-cantidad</panel_attributes>
+cantidad
+precio_unitario 
+precio_total</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>756</x>
-      <y>371</y>
-      <w>217</w>
-      <h>231</h>
-    </coordinates>
-    <panel_attributes>lt=-
-m1=1..n
-m2=1..n
-estan</panel_attributes>
-    <additional_attributes>10.0;310.0;280.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -202,17 +188,6 @@ registra</panel_attributes>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>728</x>
-      <y>462</y>
-      <w>126</w>
-      <h>49</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;160.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -511,5 +486,30 @@ tiene</panel_attributes>
     <panel_attributes>producto [id_producto,nombre,descripcion,estado,id_categoria]
                          pk                                                          fk</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>371</y>
+      <w>126</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>490</y>
+      <w>105</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n 
+m2=1..1
+esta</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;140.0</additional_attributes>
   </element>
 </diagram>

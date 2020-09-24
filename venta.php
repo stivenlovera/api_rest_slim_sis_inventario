@@ -27,55 +27,55 @@ if($method == "OPTIONS") {
     }
 }*/
 
-// LISTAR TODOS LOS CLIENTE
-$app->get('/clientes', function() use($app){
-    $sql = 'SELECT * FROM cliente WHERE estado ="1" ORDER BY id_cliente DESC;';
+// LISTAR TODOS LOS VENTAS
+$app->get('/ventas', function() use($app){
+    $sql = "SELECT * FROM venta WHERE estado='1' ORDER BY id_cliente DESC;";
     $query = connect($sql);
 
-    $clientes = array();
-    while ($cliente = $query->fetch_assoc()) {
-        $clientes[] = $cliente;
+    $ventas = array();
+    while ($venta = $query->fetch_assoc()) {
+        $ventas[] = $venta;
     }
 
     $result = array(
         'status' => 'success',
         'code'	 => 200,
-        'data' => $clientes
+        'data' => $ventas
     );
 
     echo json_encode($result);
 });
 
-// DEVOLVER UN SOLO CLIENTE
-$app->get('/clientes/:id', function($id) use( $app){
-    $sql = "SELECT * FROM cliente WHERE estado='1' AND ci = ".$id;
+// DEVOLVER UN SOLO VENTA
+$app->get('/ventas/:id_venta', function($id_venta) use( $app){
+    $sql = "SELECT * FROM venta WHERE  estado='1' AND id_venta = ".$id_venta;
     $query = connect($sql);
 
     $result = array(
         'status' 	=> 'error',
         'code'		=> 404,
-        'message' 	=> 'Cliente no disponible'
+        'message' 	=> 'venta no disponible'
     );
 
     if($query->num_rows == 1){
-        $cliente = $query->fetch_assoc();
+        $venta = $query->fetch_assoc();
 
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'data' 	=> $cliente
+            'data' 	=> $venta
         );
     }
 
     echo json_encode($result);
 });
 
-// GUARDAR CLIENTE
-$app->post('/clientes', function() use($app){
+// GUARDAR VENTAS
+$app->post('/ventas', function() use($app){
     $result = array(
         'status' => 'error',
         'code'	 => 404,
-        'message' => 'cliente NO se ha creado'
+        'message' => 'venta NO se ha creado'
     );
 
     $token = $app->request->headers('ApiKey');
@@ -85,37 +85,32 @@ $app->post('/clientes', function() use($app){
         $json = $app->request->getBody('json');
         $data = json_decode($json, true);
 
-        if(!isset($data['ci'])){
-            $data['ci']=null;
+        if(!isset($data['fecha'])){
+            $data['fecha']=null;
         }
 
-        if(!isset($data['nombre'])){
-            $data['nombre']=null;
+        if(!isset($data['id_cliente'])){
+            $data['id_cliente']=null;
         }
 
-        if(!isset($data['apellido'])){
-            $data['apellido']=null;
+        if(!isset($data['id_acceso_user'])){
+            $data['id_acceso_user']=null;
         }
 
-        if(!isset($data['celular'])){
-            $data['celular']=null;
-        }
-
-        $query = "INSERT INTO cliente(ci,nombre,apellido,celular,estado) VALUES(".
-            "'{$data['ci']}',".
-            "'{$data['nombre']}',".
-            "'{$data['apellido']}',".
-            "'{$data['celular']}',".
+        $query = "INSERT INTO venta(fecha,id_cliente,id_acceso_user,estado) VALUES(".
+            "'{$data['fecha']}',".
+            "'{$data['id_cliente']}',".
+            "'{$data['id_acceso_user']}',".
             "'1'".
             ");";
-            //echo $query;
+            //echo $query; 
         $insert = connect($query);
-
+        
         if($insert){
             $result = array(
                 'status' => 'success',
                 'code'	 => 200,
-                'message' => 'Cliente creado correctamente'
+                'message' => 'venta creado correctamente'
             );
         }
     }
@@ -124,32 +119,32 @@ $app->post('/clientes', function() use($app){
 
 });
 
-// ACTUALIZAR UN CLIENTE
-$app->put('/clientes/:id', function($id) use($app){
+// ACTUALIZAR UN VENTA
+$app->put('/ventas/:id_venta', function($id_venta) use($app){
     $json = $app->request->getBody('json');
     $data = json_decode($json, true);
 
-    $sql = "UPDATE cliente SET ".
-        "ci = '{$data["ci"]}', ".
-        "nombre = '{$data["nombre"]}', ".
-        "apellido = '{$data["apellido"]}', ".
-        "celular = '{$data["celular"]}' ";
+    $sql = "UPDATE venta SET ".
+        "fecha = '{$data["fecha"]}', ".
+        "id_cliente = '{$data["id_cliente"]}', ".
+        "id_acceso_user = '{$data["id_acceso_user"]}' ";
 
-    $sql .=	" WHERE ci = {$id}";
+    $sql .=	" WHERE id_venta = {$id_venta}";
 
+    //echo $sql;
     $query = connect($sql);
 
     if($query){
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'message' 	=> 'El cliente se ha actualizado correctamente!!'
+            'message' 	=> 'El venta se ha actualizado correctamente!!'
         );
     }else{
         $result = array(
             'status' 	=> 'error',
             'code'		=> 404,
-            'message' 	=> 'El cliente no se ha actualizado!!'
+            'message' 	=> 'El venta no se ha actualizado!!'
         );
     }
 
@@ -157,22 +152,22 @@ $app->put('/clientes/:id', function($id) use($app){
 
 });
 
-// ELIMINAR UN CLIENTE
-$app->delete('/clientes/:id', function($id) use( $app){
-    $sql = "UPDATE cliente SET estado='0' WHERE ci = ".$id;
+// ELIMINAR UN VENTA
+$app->delete('/ventas/:id_venta', function($id_venta) use( $app){
+    $sql = "UPDATE venta SET estado='0' WHERE id_venta = ".$id_venta;
     $query = connect($sql);
 
     if($query){
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'message' 	=> 'El cliente se ha eliminado correctamente!!'
+            'message' 	=> 'El ventas se ha eliminado correctamente!!'
         );
     }else{
         $result = array(
             'status' 	=> 'error',
             'code'		=> 404,
-            'message' 	=> 'El cliente no se ha eliminado!!'
+            'message' 	=> 'El ventas no se ha eliminado!!'
         );
     }
 
