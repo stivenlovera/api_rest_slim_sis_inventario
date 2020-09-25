@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fd541ff5-ccbe-4311-aed1-421575a9679e",
+		"_postman_id": "4f864eaa-4bcf-4892-b1ca-5f8a26670739",
 		"name": "api_sistema_inventario",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -19,15 +19,15 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost/api_rest_slim_sis_inventario/cliente.php/clientes",
+							"raw": "http://localhost/api_rest_slim_sis_inventario/Persona.php/Personas",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"api_rest_slim_sis_inventario",
-								"cliente.php",
-								"clientes"
+								"Persona.php",
+								"Personas"
 							]
 						}
 					},
@@ -616,6 +616,123 @@
 								"producto_venta.php",
 								"producto-ventas",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Persona",
+			"item": [
+				{
+					"name": "Get Persona",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "123456"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/api_rest_slim_sis_inventario/Persona.php/Persona",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_rest_slim_sis_inventario",
+								"Persona.php",
+								"Persona"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Persona",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "ApiKey",
+								"value": "1234567",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ci\":\"2212\",\r\n    \"nombre\": \"Yessica\",\r\n    \"apellido\": \"Romero\",\r\n    \"celular\": \"77050983\",\r\n    \"dirrecion\":\"av.virgen de lujan\",\r\n    \"telefono\": \"333333\" \r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_rest_slim_sis_inventario/Persona.php/Persona",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_rest_slim_sis_inventario",
+								"Persona.php",
+								"Persona"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get una Persona",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api_rest_slim_sis_inventario/Persona.php/Persona/22412",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_rest_slim_sis_inventario",
+								"Persona.php",
+								"Persona",
+								"22412"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put una Persona",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api_rest_slim_sis_inventario/Persona.php/Persona/22412",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_rest_slim_sis_inventario",
+								"Persona.php",
+								"Persona",
+								"22412"
 							]
 						}
 					},
