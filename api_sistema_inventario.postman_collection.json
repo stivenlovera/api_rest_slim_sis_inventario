@@ -625,6 +625,59 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get un Usuario",
+					"protocolProfileBehavior": {
+						"strictSSL": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api_rest_slim_sis_inventario/usuario.php/usuario/22412",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_rest_slim_sis_inventario",
+								"usuario.php",
+								"usuario",
+								"22412"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Usuario",
+					"protocolProfileBehavior": {
+						"strictSSL": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api_rest_slim_sis_inventario/usuario.php/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api_rest_slim_sis_inventario",
+								"usuario.php",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Persona",
 			"item": [
 				{
