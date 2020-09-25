@@ -90,8 +90,8 @@ estado
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1204</x>
-      <y>392</y>
+      <x>952</x>
+      <y>455</y>
       <w>147</w>
       <h>98</h>
     </coordinates>
@@ -130,7 +130,6 @@ estado</panel_attributes>
     </coordinates>
     <panel_attributes>producto_venta
 --
-id_producto_venta
 cantidad
 precio_unitario 
 precio_total</panel_attributes>
@@ -156,14 +155,14 @@ codigo_control
     <coordinates>
       <x>1022</x>
       <y>371</y>
-      <w>196</w>
-      <h>91</h>
+      <w>42</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..1
 m2=1..n
 tiene</panel_attributes>
-    <additional_attributes>260.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -263,8 +262,8 @@ registra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1358</x>
-      <y>420</y>
+      <x>1127</x>
+      <y>476</y>
       <w>301</w>
       <h>63</h>
     </coordinates>
@@ -275,12 +274,12 @@ registra</panel_attributes>
     <id>UMLNote</id>
     <coordinates>
       <x>1127</x>
-      <y>301</y>
+      <y>315</y>
       <w>385</w>
       <h>49</h>
     </coordinates>
-    <panel_attributes>venta[id_venta,fecha,estado,id_cliente,id_acceso_user]
-                   pk                               fk               fk</panel_attributes>
+    <panel_attributes>venta[id_venta,fecha,precio_unitario,precio_total,estado,id_cliente,id_acceso_user]
+                   pk                                                                           fk               fk</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -298,13 +297,13 @@ registra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>798</x>
-      <y>504</y>
-      <w>455</w>
+      <x>644</x>
+      <y>385</y>
+      <w>217</w>
       <h>28</h>
     </coordinates>
-    <panel_attributes>producto_venta[id_producto_venta,cantidad,precio_unitario,precio_total,id_producto,id_venta]
-                                                                                                           fk                fk    </panel_attributes>
+    <panel_attributes>producto_venta[cantidad,id_producto,id_venta]
+                                               fk                fk    </panel_attributes>
     <additional_attributes/>
   </element>
   <element>

@@ -27,55 +27,56 @@ if($method == "OPTIONS") {
     }
 }*/
 
-// LISTAR TODOS LOS CLIENTE
-$app->get('/clientes', function() use($app){
-    $sql = 'SELECT * FROM cliente WHERE estado ="1" ORDER BY id_cliente DESC;';
+// LISTAR PERSONAS
+$app->get('/Persona', function() use($app){
+    $sql = 'SELECT * FROM Persona WHERE estado ="1" ORDER BY ci DESC;';
     $query = connect($sql);
 
-    $clientes = array();
-    while ($cliente = $query->fetch_assoc()) {
-        $clientes[] = $cliente;
+    //echo  $sql;
+    $Personas = array();
+    while ($Persona = $query->fetch_assoc()) {
+        $Personas[] = $Persona;
     }
 
     $result = array(
         'status' => 'success',
         'code'	 => 200,
-        'data' => $clientes
+        'data' => $Personas
     );
 
     echo json_encode($result);
 });
 
 // DEVOLVER UN SOLO CLIENTE
-$app->get('/clientes/:id', function($id) use( $app){
-    $sql = "SELECT * FROM cliente WHERE estado='1' AND ci = ".$id;
+$app->get('/Persona/:id', function($id) use( $app){
+    $sql = "SELECT * FROM persona WHERE estado='1' AND ci = ".$id;
     $query = connect($sql);
-
+    //echo $sql;
     $result = array(
         'status' 	=> 'error',
         'code'		=> 404,
-        'message' 	=> 'Cliente no disponible'
+        'message' 	=> 'Persona no disponible'
     );
 
     if($query->num_rows == 1){
-        $cliente = $query->fetch_assoc();
+        $persona = $query->fetch_assoc();
 
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'data' 	=> $cliente
+            'data' 	=> $persona
         );
     }
 
     echo json_encode($result);
 });
 
-// GUARDAR CLIENTE
-$app->post('/clientes', function() use($app){
+// GUARDAR PERSONA
+$app->post('/Persona', function() use($app){
     $result = array(
         'status' => 'error',
         'code'	 => 404,
-        'message' => 'cliente NO se ha creado'
+        'message' => 'Persona NO se ha creado'
     );
 
     $token = $app->request->headers('ApiKey');
@@ -99,23 +100,34 @@ $app->post('/clientes', function() use($app){
 
         if(!isset($data['celular'])){
             $data['celular']=null;
+
         }
 
-        $query = "INSERT INTO cliente(ci,nombre,apellido,celular,estado) VALUES(".
+        if(!isset($data['dirrecion'])){
+            $data['dirrecion']=null;
+
+        }
+        if(!isset($data['telefono'])){
+            $data['telefono']=null;
+        } 
+
+        $query = "INSERT INTO Persona(ci,nombre,apellido,celular,dirrecion,telefono,estado) VALUES(".
             "'{$data['ci']}',".
             "'{$data['nombre']}',".
             "'{$data['apellido']}',".
             "'{$data['celular']}',".
+            "'{$data['dirrecion']}',".
+            "'{$data['telefono']}',".
             "'1'".
             ");";
             //echo $query;
         $insert = connect($query);
-
+        //echo  $query
         if($insert){
             $result = array(
                 'status' => 'success',
                 'code'	 => 200,
-                'message' => 'Cliente creado correctamente'
+                'message' => 'Persona creado correctamente'
             );
         }
     }
@@ -125,11 +137,11 @@ $app->post('/clientes', function() use($app){
 });
 
 // ACTUALIZAR UN CLIENTE
-$app->put('/clientes/:id', function($id) use($app){
+$app->put('/clientesPersona/:id', function($id) use($app){
     $json = $app->request->getBody('json');
     $data = json_decode($json, true);
 
-    $sql = "UPDATE cliente SET ".
+    $sql = "UPDATE Persona SET ".
         "ci = '{$data["ci"]}', ".
         "nombre = '{$data["nombre"]}', ".
         "apellido = '{$data["apellido"]}', ".
@@ -143,13 +155,13 @@ $app->put('/clientes/:id', function($id) use($app){
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'message' 	=> 'El cliente se ha actualizado correctamente!!'
+            'message' 	=> 'La Personas se ha actualizado correctamente!!'
         );
     }else{
         $result = array(
             'status' 	=> 'error',
             'code'		=> 404,
-            'message' 	=> 'El cliente no se ha actualizado!!'
+            'message' 	=> 'La Persona no se ha actualizado!!'
         );
     }
 
@@ -157,22 +169,22 @@ $app->put('/clientes/:id', function($id) use($app){
 
 });
 
-// ELIMINAR UN CLIENTE
-$app->delete('/clientes/:id', function($id) use( $app){
-    $sql = "UPDATE cliente SET estado='0' WHERE ci = ".$id;
+// ELIMINAR UN Personas
+$app->delete('/Persona/:id', function($id) use( $app){
+    $sql = "UPDATE persona SET estado='0' WHERE ci = ".$id;
     $query = connect($sql);
 
     if($query){
         $result = array(
             'status' 	=> 'success',
             'code'		=> 200,
-            'message' 	=> 'El cliente se ha eliminado correctamente!!'
+            'message' 	=> 'La personas se ha eliminado correctamente!!'
         );
     }else{
         $result = array(
             'status' 	=> 'error',
             'code'		=> 404,
-            'message' 	=> 'El cliente no se ha eliminado!!'
+            'message' 	=> 'La Persona no se ha eliminado!!'
         );
     }
 
