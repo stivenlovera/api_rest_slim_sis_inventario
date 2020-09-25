@@ -27,6 +27,40 @@ if($method == "OPTIONS") {
     }
 }*/
 
+
+/**
+ * @api {get} /producto-ventas GET PRODUCTO-VENTA
+ * @apiGroup Producto-ventas
+ * @apiName Getproducto-ventas
+ *
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {number} code  Codigo de servidor http
+ * @apiSuccess {array} data Datos sacados de la tabla producto-ventas
+ *
+ * @apiSuccess {string} data.id_producto_venta Identificador unico
+ * @apiSuccess {string} data.cantidad Cantidad del producto
+ * @apiSuccess {string} data.id_venta Identificador unico de una venta
+ * @apiSuccess {string} data.precio_unitario Precio unitario de producto
+ * @apiSuccess {string} data.precio_total Precio total de producto
+ * @apiSuccess {string} data.id_producto Identificador unico de un producto
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":[
+                    {
+                       "id_producto_venta": "string",
+                        "cantidad": "string",
+                        "id_venta": "string",
+                        "precio_unitario": "string",
+                        "precio_total": "string",
+                        "id_producto": "string"
+                    }
+                ]
+      }
+ */
 // LISTAR TODOS LOS PRODUCTO-VENTA
 $app->get('/producto-ventas', function() use($app){
     $sql = 'SELECT * FROM producto_venta ORDER BY id_venta DESC;';
@@ -46,11 +80,45 @@ $app->get('/producto-ventas', function() use($app){
     echo json_encode($result);
 });
 
+
+/**
+ * @api {get} /producto-ventas/:ID_PRODUCTO_VENTA GET ONE PRODUCTO-VENTA 
+ * @apiGroup Producto-ventas
+ * @apiName Getproducto-ventasID_PRODUCTO_VENTA
+ *
+ * @apiParam {Number} ID_PRODUCTO_VENTA identificador unico de la informacion
+ *
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {number} code  Codigo de servidor http
+ * @apiSuccess {object} data Datos sacados de la tabla producto-venta
+ *
+ * @apiSuccess {string} data.id_producto_venta Identificador unico
+ * @apiSuccess {string} data.cantidad Cantidad del producto
+ * @apiSuccess {string} data.id_venta Identificador unico de una venta
+ * @apiSuccess {string} data.precio_unitario Precio unitario de producto
+ * @apiSuccess {string} data.precio_total Precio total de producto
+ * @apiSuccess {string} data.id_producto Identificador unico de un producto
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":{
+                "id_producto_venta": "string",
+                "cantidad": "string",
+                "id_venta": "string",
+                "precio_unitario": "string",
+                "precio_total": "string",
+                "id_producto": "string"
+ *          }
+ *    }
+ */
 // DEVOLVER UN SOLO PRODUCTO-VENTA
-$app->get('/producto-ventas/:id_venta', function($id_venta) use( $app){
+$app->get('/producto-ventas/:id_producto_venta', function($id_producto_venta) use( $app){
     //$producto = $app->request()->params('producto');
     //echo $producto;
-    $sql = 'SELECT * FROM producto_venta WHERE id_producto_venta = '.$id_venta.';';
+    $sql = 'SELECT * FROM producto_venta WHERE id_producto_venta = '.$id_producto_venta.';';
     $query = connect($sql);
     
     $result = array(
@@ -72,6 +140,37 @@ $app->get('/producto-ventas/:id_venta', function($id_venta) use( $app){
     echo json_encode($result);
 });
 
+
+/**
+ * @api {post} /producto-ventas POST PRODUCTO-VENTA 
+  * @apiName Postproducto-ventas
+ * @apiGroup Producto-ventas
+ *
+ * @apiParam (Request body) {number} cantidad Cantidad del producto
+ * @apiParam (Request body) {string} precio_unitario  Precio unitario de producto
+ * @apiParam (Request body) {string} precio_total Precio total de producto
+ * @apiParam (Request body) {number} id_venta Telefono de cliente
+ * @apiParam (Request body) {number} id_producto Identificador unico de un producto
+ * @apiExample {json} Request body:
+    { 
+        "cantidad":number,
+        "precio_unitario": "string",
+        "precio_total": "string",
+        "id_venta": number,
+        "id_producto": number
+    }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {String} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "Producto-venta creado correctamente"
+ *    }
+ */
 // GUARDAR PRODUCTO-VENTA
 $app->post('/producto-ventas', function() use($app){
     $result = array(
@@ -136,6 +235,40 @@ $app->post('/producto-ventas', function() use($app){
 
 });
 
+
+
+/**
+ * @api {put} /producto-ventas/:ID_PRODUCTO_VENTA PUT PRODUCTO-VENTA 
+ * @apiName Putproducto-ventas
+ * @apiGroup Producto-ventas
+ *
+ * @apiParam {Number} ID_PRODUCTO_VENTA identificador unico de la informacion
+ *
+ * @apiParam (Request body) {number} cantidad Cantidad del producto
+ * @apiParam (Request body) {string} precio_unitario  Precio unitario de producto
+ * @apiParam (Request body) {string} precio_total Precio total de producto
+ * @apiParam (Request body) {number} id_venta Telefono de cliente
+ * @apiParam (Request body) {number} id_producto Identificador unico de un producto
+ * @apiExample {json} Request body:
+    { 
+        "cantidad":number,
+        "precio_unitario": "string",
+        "precio_total": "string",
+        "id_venta": number,
+        "id_producto": number
+    }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El producto-venta se ha actualizado correctamente!!"
+ *    }
+ */
 // ACTUALIZAR UN PRODUCTO-VENTA
 $app->put('/producto-venta/:id_producto_venta', function($id_producto_venta) use($app){
     $json = $app->request->getBody('json');
@@ -171,6 +304,27 @@ $app->put('/producto-venta/:id_producto_venta', function($id_producto_venta) use
 
 });
 
+
+
+ /**
+ * @api {delete} /producto-ventas/:ID_PRODUCTO_VENTA DELETE PRODUCTO-VENTA 
+ * @apiName Deleteproducto-ventas
+ * @apiGroup Producto-ventas
+ *
+ * @apiParam {Number} ID_PRODUCTO_VENTA identificador unico de la informacion
+ *  
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El producto-venta no se ha eliminado!!"
+ *    }
+ */
 // ELIMINAR UN PRODUCTO-VENTA
 $app->delete('/producto-ventas/:id_producto_venta', function($id_producto_venta) use( $app){
     $sql = 'DELETE FROM producto_venta WHERE id_producto_venta = '.$id_producto_venta;

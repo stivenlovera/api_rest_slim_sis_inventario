@@ -27,6 +27,39 @@ if($method == "OPTIONS") {
     }
 }*/
 
+
+
+/**
+ * @api {get} /ventas GET VENTA
+ * @apiGroup Ventas
+ * @apiName Getventas
+ *
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {number} code  Codigo de servidor http
+ * @apiSuccess {array} data Datos sacados de la tabla venta
+ *
+ * @apiSuccess {string} data.id_venta Identificador de la venta
+ * @apiSuccess {string} data.fecha Fecha de registro de la venta
+ * @apiSuccess {string} data.estado Estado de la venta
+ * @apiSuccess {string} data.id_cliente Identificador unico del cliente
+ * @apiSuccess {string} data.id_acceso_user Identificador unico del usuario
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":[
+                    {
+                        "id_venta": "string",
+                        "fecha": "string",
+                        "estado": "string",
+                        "id_cliente": "string",
+                        "id_acceso_user": "string"
+                    }
+                ]
+      }
+ */
 // LISTAR TODOS LOS VENTAS
 $app->get('/ventas', function() use($app){
     $sql = "SELECT * FROM venta WHERE estado='1' ORDER BY id_cliente DESC;";
@@ -46,6 +79,39 @@ $app->get('/ventas', function() use($app){
     echo json_encode($result);
 });
 
+
+
+/**
+ * @api {get} /producto-ventas/:ID_VENTA GET ONE VENTA 
+ * @apiGroup Ventas
+ * @apiName Getventas ID_VENTA
+ *
+ * @apiParam {Number} ID_VENTA identificador unico de la venta
+ *
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {number} code  Codigo de servidor http
+ * @apiSuccess {object} data Datos sacados de la tabla venta
+ *
+ * @apiSuccess {string} data.id_venta Identificador de la venta
+ * @apiSuccess {string} data.fecha Fecha de registro de la venta
+ * @apiSuccess {string} data.estado Estado de la venta
+ * @apiSuccess {string} data.id_cliente Identificador unico del cliente
+ * @apiSuccess {string} data.id_acceso_user Identificador unico del usuario
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":{
+                "id_venta": "string",
+                "fecha": "string",
+                "estado": "string",
+                "id_cliente": "string",
+                "id_acceso_user": "string"
+            }
+ *    }
+ */
 // DEVOLVER UN SOLO VENTA
 $app->get('/ventas/:id_venta', function($id_venta) use( $app){
     $sql = "SELECT * FROM venta WHERE  estado='1' AND id_venta = ".$id_venta;
@@ -70,6 +136,35 @@ $app->get('/ventas/:id_venta', function($id_venta) use( $app){
     echo json_encode($result);
 });
 
+
+
+/**
+ * @api {post} /ventas POST VENTA 
+ * @apiGroup Ventas
+ * @apiName Postventas
+ *
+ * @apiParam (Request body) {number} fecha Fecha de registro
+ * @apiParam (Request body) {string} id_cliente Identificador unico del cliente
+ * @apiParam (Request body) {string} id_acceso_user Identificador unico del usuario
+ *
+ * @apiExample {json} Request body:
+    { 
+        "fecha": "string",
+        "id_cliente": number,
+        "id_acceso_user": number
+    }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {String} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "venta creado correctamente"
+ *    }
+ */
 // GUARDAR VENTAS
 $app->post('/ventas', function() use($app){
     $result = array(
@@ -119,6 +214,37 @@ $app->post('/ventas', function() use($app){
 
 });
 
+
+
+/**
+ * @api {put} /producto-ventas/:ID_VENTA PUT VENTA 
+ * @apiGroup Ventas
+ * @apiName Putventas
+ *
+ * @apiParam {Number} ID_VENTA identificador unico de la venta
+ *
+ * @apiParam (Request body) {number} fecha Fecha de registro
+ * @apiParam (Request body) {string} id_cliente Identificador unico del cliente
+ * @apiParam (Request body) {string} id_acceso_user Identificador unico del usuario
+ *
+ * @apiExample {json} Request body:
+    { 
+        "fecha": "string",
+        "id_cliente": number,
+        "id_acceso_user": number
+    }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El venta se ha actualizado correctamente!!"
+ *    }
+ */
 // ACTUALIZAR UN VENTA
 $app->put('/ventas/:id_venta', function($id_venta) use($app){
     $json = $app->request->getBody('json');
@@ -152,6 +278,27 @@ $app->put('/ventas/:id_venta', function($id_venta) use($app){
 
 });
 
+
+
+/**
+ * @api {delete} /producto-ventas/:ID_VENTA DELETE VENTA 
+ * @apiName Deleteventas
+ * @apiGroup Ventas
+ *
+ * @apiParam {Number} ID_VENTA identificador unico de la venta
+ *  
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El ventas se ha eliminado correctamente!!"
+ *    }
+ */
 // ELIMINAR UN VENTA
 $app->delete('/ventas/:id_venta', function($id_venta) use( $app){
     $sql = "UPDATE venta SET estado='0' WHERE id_venta = ".$id_venta;

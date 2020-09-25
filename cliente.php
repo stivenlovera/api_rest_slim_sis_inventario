@@ -27,6 +27,41 @@ if($method == "OPTIONS") {
     }
 }*/
 
+
+
+/**
+ * @api {get} /clientes GET CLIENTES
+ * @apiGroup Clientes
+ * @apiName GetClientes
+ *
+ * @apiSuccess {String} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {array} data Datos sacados de la tabla cliente
+ *
+ * @apiSuccess {String} data.id_cliente Identificador del cliente
+ * @apiSuccess {String} data.ci Cedula de identidad
+ * @apiSuccess {String} data.nombre Nombre del cliente
+ * @apiSuccess {String} data.apellido Apellido de cliente
+ * @apiSuccess {String} data.celular Celular de referencia
+ * @apiSuccess {String} data.estado Estado actual del cliente
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data": [
+ *                   {
+ *                      "id_cliente": "number",
+                        "ci": "string",
+                        "nombre": "string",
+                        "apellido": "string",
+                        "celular": "string",
+                        "estado": "number"
+ *                    }
+ *               ]
+ *    }
+ */
 // LISTAR TODOS LOS CLIENTE
 $app->get('/clientes', function() use($app){
     $sql = 'SELECT * FROM cliente WHERE estado ="1" ORDER BY id_cliente DESC;';
@@ -46,9 +81,41 @@ $app->get('/clientes', function() use($app){
     echo json_encode($result);
 });
 
+
+/**
+ * @api {get} /clientes/:CI GET ONE CLIENTES
+ * @apiName GetClientesId
+ * @apiGroup Clientes
+ * @apiParam {Number} CI identificador unico del cliente CI
+ * @apiSuccess {String} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {Object} data Dato sacados de la tabla cliente
+ *
+ * @apiSuccess {String} data.id_cliente Identificador del cliente
+ * @apiSuccess {String} data.ci Cedula de identidad
+ * @apiSuccess {String} data.nombre Nombre del cliente
+ * @apiSuccess {String} data.apellido Apellido de cliente
+ * @apiSuccess {String} data.celular Celular de referencia
+ * @apiSuccess {String} data.estado Estado actual del cliente
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":{
+ *              "id_cliente": "string",
+                "ci": "string",
+                "nombre": "string",
+                "apellido": "string",
+                "celular": "string",
+                "estado": "number"
+ *          }
+ *    }
+ */
 // DEVOLVER UN SOLO CLIENTE
-$app->get('/clientes/:id', function($id) use( $app){
-    $sql = "SELECT * FROM cliente WHERE estado='1' AND ci = ".$id;
+$app->get('/clientes/:ci', function($ci) use( $app){
+    $sql = "SELECT * FROM cliente WHERE estado='1' AND ci = ".$ci;
     $query = connect($sql);
 
     $result = array(
@@ -70,6 +137,34 @@ $app->get('/clientes/:id', function($id) use( $app){
     echo json_encode($result);
 });
 
+
+/**
+ * @api {post} /clientes POST CLIENTE
+ * @apiName Postclientes
+ * @apiGroup Clientes
+ * @apiParam (Request body) {string} ci CI de cliente
+ * @apiParam (Request body) {string} nombre Nombres de clientes
+ * @apiParam (Request body) {string} apellido Apellido de clientes
+ * @apiParam (Request body) {string} telefono Telefono de cliente
+ * @apiExample {json} Request body:
+ *   { 
+ *      "ci": "string",
+ *      "nombre": "string",
+ *      "apellido": "string",
+ *      "celular": "string"
+ *   }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {String} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "Cliente creado correctamente"
+ *    }
+ */
 // GUARDAR CLIENTE
 $app->post('/clientes', function() use($app){
     $result = array(
@@ -124,6 +219,36 @@ $app->post('/clientes', function() use($app){
 
 });
 
+
+
+/**
+ * @api {put} /clientes/:CI PUT CLIENTE
+ * @apiName Putclientes
+ * @apiGroup Clientes
+ * @apiParam {Number} CI identificador unico del cliente CI
+ * @apiParam (Request body) {number} ci CI de cliente
+ * @apiParam (Request body) {string} nombre Nombres de clientes
+ * @apiParam (Request body) {string} apellido Apellido de clientes
+ * @apiParam (Request body) {string} telefono Telefono de cliente
+ * @apiExample {json} Request body:
+ *   { 
+ *      "ci": "string",
+ *      "nombre": "string",
+ *      "apellido": "string",
+ *      "celular": "string"
+ *   }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El cliente se ha actualizado!!"
+ *    }
+ */
 // ACTUALIZAR UN CLIENTE
 $app->put('/clientes/:id', function($id) use($app){
     $json = $app->request->getBody('json');
@@ -156,6 +281,25 @@ $app->put('/clientes/:id', function($id) use($app){
     echo json_encode($result);
 
 });
+
+
+/**
+ * @api {delete} /clientes/:CI DELETE CLIENTE
+ * @apiParam {Number} CI identificador unico del cliente CI.
+ * @apiName Deleteclientes
+ * @apiGroup Clientes
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El cliente no se ha eliminado!!"
+ *    }
+ */
 
 // ELIMINAR UN CLIENTE
 $app->delete('/clientes/:id', function($id) use( $app){

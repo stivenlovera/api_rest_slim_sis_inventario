@@ -27,6 +27,35 @@ if($method == "OPTIONS") {
     }
 }*/
 
+
+
+/**
+ * @api {get} /recibos GET RECIBO
+ * @apiGroup Recibo
+ * @apiName Getrecibo
+ *
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {number} code  Codigo de servidor http
+ * @apiSuccess {array} data Datos sacados de la tabla recibo
+ *
+ * @apiSuccess {string} data.nit Numero nit de la venta-cliente
+ * @apiSuccess {string} data.codigo_control Codigo generado venta
+ * @apiSuccess {string} data.id_venta Identificador unico de la venta
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":[
+                    {
+                        "nit": "string",
+                        "codigo_control": "string",
+                        "id_venta": "string"
+                    }
+                ]
+      }
+ */
 // LISTAR TODOS LOS RECIBO
 $app->get('/recibos', function() use($app){
     $sql = "SELECT * FROM recibo ORDER BY id_venta DESC;";
@@ -46,6 +75,35 @@ $app->get('/recibos', function() use($app){
     echo json_encode($result);
 });
 
+
+
+/**
+ * @api {get} /recibos/:ID_RECIBO GET ONE RECIBO 
+ * @apiGroup Recibo
+ * @apiName Getrecibo ID_RECIBO
+ *
+ * @apiParam {Number} ID_RECIBO identificador unico de la recibo
+ *
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {number} code  Codigo de servidor http
+ * @apiSuccess {object} data Datos sacados de la tabla recibo
+ *
+ * @apiSuccess {string} data.nit Numero nit de la venta-cliente
+ * @apiSuccess {string} data.codigo_control Codigo generado venta
+ * @apiSuccess {string} data.id_venta Identificador unico de la venta
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "data":{
+                "nit": "string",
+                "codigo_control": "string",
+                "id_venta": "string"
+            }
+      }
+ */
 // DEVOLVER UN SOLO RECIBO
 $app->get('/recibos/:id_venta', function($id_venta) use( $app){
     $sql = "SELECT * FROM recibo AND id_venta = ".$id_venta;
@@ -70,6 +128,35 @@ $app->get('/recibos/:id_venta', function($id_venta) use( $app){
     echo json_encode($result);
 });
 
+
+
+/**
+ * @api {post} /recibos POST RECIBO  
+ * @apiGroup Recibo
+ * @apiName Postrecibo
+ *
+ * @apiParam (Request body) {string} Numero nit de la venta-cliente
+ * @apiParam (Request body) {string} Codigo generado de la venta
+ * @apiParam (Request body) {number} id_venta Identificador unico de la venta
+ *
+ * @apiExample {json} Request body:
+    { 
+        "nit": "string",
+        "codigo_control": "string",
+        "id_venta": number
+    }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "recibo creado correctamente"
+ *    }
+ */
 // GUARDAR RECIBO
 $app->post('/recibos', function() use($app){
     $result = array(
@@ -122,6 +209,37 @@ $app->post('/recibos', function() use($app){
 
 });
 
+
+
+/**
+ * @api {put} /recibos/:ID_VENTA PUT RECIBO   
+ * @apiGroup Recibo
+ * @apiName Putrecibo
+ *
+ * @apiParam {Number} ID_RECIBO identificador unico de la recibo
+ *
+ * @apiParam (Request body) {string} Numero nit de la venta-cliente
+ * @apiParam (Request body) {string} Codigo generado de la venta
+ * @apiParam (Request body) {number} id_venta Identificador unico de la venta
+ *
+ * @apiExample {json} Request body:
+    { 
+        "nit": "string",
+        "codigo_control": "string",
+        "id_venta": number
+    }
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El recibo se ha actualizado correctamente!!"
+ *    }
+ */
 // ACTUALIZAR UN RECIBO
 $app->put('/recibos/:id_venta', function($id_venta) use($app){
     $json = $app->request->getBody('json');
@@ -154,6 +272,27 @@ $app->put('/recibos/:id_venta', function($id_venta) use($app){
 
 });
 
+
+
+/**
+ * @api {delete} /recibos/:ID_RECIBO DELETE RECIBO   
+ * @apiName Deleterecibo
+ * @apiGroup Recibo
+ *
+ * @apiParam {Number} ID_RECIBO identificador unico de la recibo
+ *  
+ * @apiSuccess {string} status Estado de respuesta 
+ * @apiSuccess {Number} code  Codigo de servidor http
+ * @apiSuccess {string} message Mensaje de exito
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    {
+ *       "status": "success",
+ *       "code": 200,
+ *       "message": "El recibo se ha eliminado correctamente!!"
+ *    }
+ */
 // ELIMINAR UN RECIBO
 $app->delete('/recibos/:id_venta', function($id_venta) use( $app){
     $sql = "DELETE FROM recibo WHERE id_venta = ".$id_venta;
