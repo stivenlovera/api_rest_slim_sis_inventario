@@ -19,7 +19,7 @@
                             }
                         ],
                         "url": {
-                            "raw": "http://localhost/sistema_inventario/categoria.php/categorias",
+                            "raw": "http://localhost/api_rest_slim_sis_inventario/categoria.php/categorias",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -44,7 +44,7 @@
                             }
                         ],
                         "url": {
-                            "raw": "http://localhost/sistema_inventario/categoria.php/categorias/1",
+                            "raw": "http://localhost/api_rest_slim_sis_inventario/categoria.php/categorias/1",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -84,7 +84,7 @@
                             }
                         },
                         "url": {
-                            "raw": "http://localhost/sistema_inventario/categoria.php/categorias",
+                            "raw": "http://localhost/api_rest_slim_sis_inventario/categoria.php/categorias",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -113,7 +113,7 @@
                             "raw": "{\r\n    \"descripcion\": \"988855\",\r\n   \"estado\": \"1\"\r\n}"
                         },
                         "url": {
-                            "raw": "http://localhost/sistema_inventario/categoria.php/categorias/1",
+                            "raw": "http://localhost/api_rest_slim_sis_inventario/categoria.php/categorias/1",
                             "protocol": "http",
                             "host": [
                                 "localhost"
@@ -134,7 +134,7 @@
                         "method": "DELETE",
                         "header": [],
                         "url": {
-                            "raw": "http://localhost/sistema_inventario/categoria.php/categorias/2",
+                            "raw": "http://localhost/api_rest_slim_sis_inventario/categoria.php/categorias/2",
                             "protocol": "http",
                             "host": [
                                 "localhost"

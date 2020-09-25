@@ -75,12 +75,12 @@ $app->post('/productos', function() use($app){
     $result = array(
         'status' => 'error',
         'code'	 => 404,
-        'message' => 'Producto NO se ha creado'
+        'message' => 'producto NO se ha creado'
     );
 
-    //$token = $app->request->headers('ApiKey');
+    $token = $app->request->headers('ApiKey');
 
-    //if($token=='1234567'){
+    if($token=='1234567'){
 
         $json = $app->request->getBody('json');
         $data = json_decode($json, true);
@@ -92,50 +92,46 @@ $app->post('/productos', function() use($app){
         if(!isset($data['descripcion'])){
             $data['descripcion']=null;
         }
-
-        if(!isset($data['estado'])){
-            $data['estado']=null;
-        }
         
         if(!isset($data['id_categoria'])){
             $data['id_categoria']=null;
         }
 
-        $query = "INSERT INTO productos VALUES(NULL,".
-            "'{$data['nombre']}',".
-            "'{$data['descripcion']}',".
-            "'{$data['estado']}',".
-            "'{$data['id_categoria']}'".
-            ");";
-
-        $insert = $db->query($query);
-
+        $query = "INSERT INTO producto(nombre,descripcion,estado,id_categoria) VALUES(".
+        "'{$data['nombre']}',".
+        "'{$data['descripcion']}',".
+        "'1',".
+        "'{$data['id_categoria']}'".
+        ");";
+            //echo $query; 
+        $insert = connect($query);
+        
         if($insert){
             $result = array(
                 'status' => 'success',
                 'code'	 => 200,
-                'message' => 'Producto creado correctamente'
+                'message' => 'producto creado correctamente'
             );
         }
-    //}
+    }
 
     echo json_encode($result);
 
 });
 
 // ACTUALIZAR UN PRODUCTO
-$app->put('/productos/:id', function($id) use($app){
+$app->put('/productos/:id_producto', function($id_producto) use($app){
     $json = $app->request->getBody('json');
     $data = json_decode($json, true);
 
-    $sql = "UPDATE productos SET ".
+    $sql = "UPDATE producto SET ".
         "nombre = '{$data["nombre"]}', ".
         "descripcion = '{$data["descripcion"]}', ".
-        "estado = '{$data["estado"]}', ";
+        "id_categoria = '{$data["id_categoria"]}' ";
 
-    $sql .=	"id_categoria = '{$data["id_categoria"]}' WHERE id_producto = {$id}";
+    $sql .=	" WHERE id_producto = {$id_producto}";
 
-
+    echo $sql;
     $query = connect($sql);
 
     if($query){
@@ -157,8 +153,8 @@ $app->put('/productos/:id', function($id) use($app){
 });
 
 // ELIMINAR UN PRODUCTO
-$app->delete('/productos/:id', function($id) use($app){
-    $sql = 'DELETE FROM producto WHERE id_producto = '.$id;
+$app->delete('/productos/:id_producto', function($id_producto) use( $app){
+    $sql = "UPDATE producto SET estado='0' WHERE id_producto = ".$id_producto;
     $query = connect($sql);
 
     if($query){
